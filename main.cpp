@@ -36,6 +36,8 @@ inline uint8_t expand2(uint8_t a) { return expand4((a << 2) | a); }
 
 void decodeBoard(FILE* fh, uint8_t const* tiles)
 {
+	uint32_t address = ftell(fh);
+
 	board_t board;
 	fread(&board, sizeof(board), 1, fh);
 	reverseName(board.name);
@@ -64,7 +66,7 @@ void decodeBoard(FILE* fh, uint8_t const* tiles)
 	}
 
 	char filename[128];
-	sprintf(filename, "output/images/%s.png", board.name);
+	sprintf(filename, "output/images/%s-%08X.png", board.name, address);
 	stbi_write_png(filename, w*8, h*8, 1, pixelBuffer, w*8);
 }
 
