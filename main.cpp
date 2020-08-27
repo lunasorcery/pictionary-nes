@@ -66,7 +66,7 @@ void decodeBoard(FILE* fh, uint8_t const* tiles)
 	}
 
 	char filename[128];
-	sprintf(filename, "output/images/%s-%08X.png", board.name, address);
+	sprintf(filename, "output/images/%08X-%s.png", address, board.name);
 	stbi_write_png(filename, w*8, h*8, 1, pixelBuffer, w*8);
 }
 
@@ -119,8 +119,9 @@ int main()
 	FILE* fhPrompts = fopen("output/prompts.txt", "wb");
 	{
 		decodeExtraStrings(fh, 0x4010, 1008, fhPrompts);
-		fclose(fhPrompts);
 	}
+	fclose(fhPrompts);
+
 	fclose(fh);
 
 	return 0;
